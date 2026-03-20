@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Doodle Team Chat
 
-## Getting Started
+Frontend for the [Doodle chat challenge](https://github.com/DoodleScheduling/hiring-challenges/tree/master/frontend-engineer). Built with Next.js 15, TypeScript, and React Query.
 
-First, run the development server:
+## Setup
+
+Make sure the [chat API backend](https://github.com/DoodleScheduling/frontend-challenge-chat-api) is running on `localhost:3000` first.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+PORT=3001 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3001](http://localhost:3001).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How it works
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The app fetches messages from the API and displays them in a chat layout. Your messages show up on the right, everyone else's on the left. Messages are polled every second so new ones appear in near real-time.
 
-## Learn More
+Sending a message hits `POST /api/v1/messages` — an optimistic update shows it immediately while the request goes through.
 
-To learn more about Next.js, take a look at the following resources:
+## Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Next.js 15** with App Router
+- **TypeScript**
+- **React Query** for data fetching and caching
+- **Axios** as HTTP client
+- **CSS Modules** for scoped styling
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project structure
 
-## Deploy on Vercel
+```
+src/
+├── app/              → layout, page, global styles
+├── components/
+│   ├── Chat/         → ChatHeader, ChatLayout, MessageBubble,
+│   │                   MessageInput, MessageList
+│   └── Providers.tsx → React Query setup
+├── hooks/
+│   └── useMessages.ts → data fetching + send mutation
+└── lib/
+    └── api.ts         → axios config + types
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Key decisions
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Polling over WebSocket**: the API doesn't expose a socket, so 1s polling keeps things responsive
+- **`useInfiniteQuery`**: supports cursor-based pagination through the `before` param
+- **Optimistic updates**: messages appear instantly, then sync with the server on settle
+- **CSS Modules**: keeps styles scoped without needing a utility framework
+
+## Scripts
+
+```bash
+npm run dev       # start dev server
+npm run build     # production build
+npm run lint      # eslint
+npx tsc --noEmit  # type check
+```
