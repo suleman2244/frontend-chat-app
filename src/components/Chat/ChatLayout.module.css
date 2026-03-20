@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  margin: 0 auto;
+  max-width: 800px;
+  background-color: var(--background);
+  background-image: url('/Body BG.png');
+  background-repeat: repeat;
+  box-shadow: var(--box-shadow);
+}
+
+.main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.main::-webkit-scrollbar {
+  width: 8px;
+}
+
+.main::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.main::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
+  .container {
+    max-width: 100%;
+    box-shadow: none;
+  }
+
+  .main {
+    padding: 0.75rem;
+  }
+}

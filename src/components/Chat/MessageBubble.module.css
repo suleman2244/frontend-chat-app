@@ -1,0 +1,90 @@
+.wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.wrapperOther {
+  justify-content: flex-start;
+}
+
+.wrapperOwn {
+  justify-content: flex-end;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.bubble {
+  max-width: 80%;
+  padding: 16px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  line-height: 1.4;
+  font-size: 0.95rem;
+  word-wrap: break-word;
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.bubbleOther {
+  background-color: var(--secondary-color);
+  color: #333333;
+}
+
+.bubbleOwn {
+  background-color: var(--primary-color);
+  color: #333333;
+}
+
+.author {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #9ca3af;
+  margin-bottom: 4px;
+}
+
+.content {
+  color: #374151;
+  white-space: pre-wrap;
+}
+
+.timestamp {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-top: 8px;
+  text-align: left;
+}
+
+.wrapperOwn .timestamp {
+  text-align: right;
+  color: #9ca3af;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
+  .bubble {
+    max-width: 90%;
+    padding: 12px;
+    font-size: 0.9rem;
+  }
+
+  .author {
+    font-size: 0.8rem;
+  }
+
+  .timestamp {
+    font-size: 0.7rem;
+    margin-top: 6px;
+  }
+}
